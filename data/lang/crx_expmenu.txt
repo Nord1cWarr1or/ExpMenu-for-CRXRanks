@@ -1,0 +1,45 @@
+[en]
+CRX_EXPEDIT_CVAR_ONPAGE         = Number of players on the page in the menu
+CRX_EXPEDIT_CVAR_FLAG           = Additional flag to edit menu
+CRX_EXPEDIT_MENU_HEAD_TAKE      = Who do you want to take away exp from?
+CRX_EXPEDIT_MENU_HEAD_GIVE      = Who do you want to give exp to?
+CRX_EXPEDIT_MENU_HEAD_PAGE      = Page: \y%i \wfrom \y%i
+CRX_EXPEDIT_MENU_PLAYERINFO     = \w%n (\y%i exp.\w) \w[\r%i LVL\w]
+CRX_EXPEDIT_MENU_TAKE           = Exp \rto be taken away: \y[\r%i\y]
+CRX_EXPEDIT_MENU_GIVE           = Exp \yto be given: \y[\r%i\y]
+CRX_EXPEDIT_MENU_MORE           = More
+CRX_EXPEDIT_MENU_BACK           = Back
+CRX_EXPEDIT_MENU_EXIT           = Exit
+CRX_EXPEDIT_EXPMENU_HEAD_TAKE   = \wHow much exp to take away?^nCurrent: \y%i
+CRX_EXPEDIT_EXPMENU_HEAD_GIVE   = \wHow much exp to give?^nCurrent: \y%i
+CRX_EXPEDIT_EXPMENU_ENTEREXP    = Enter manually
+CRX_EXPEDIT_EXPMENU_TAKE        = \rTo take away \wexp
+CRX_EXPEDIT_EXPMENU_GIVE        = \yTo give \wexp
+CRX_EXPEDIT_CHAT_TAG            = ^4[CRXRanks]
+CRX_EXPEDIT_CHAT_GIVE           = ^3%n ^1gave ^4%i ^1exp to ^3%n
+CRX_EXPEDIT_CHAT_TAKE           = ^3%n ^1has taken ^4%i ^1exp from ^3%n
+CRX_EXPEDIT_CHAT_WROGNUMBER     = The number cannot be less than 1!
+CRX_EXPEDIT_CHAT_NO_ACCES       = ^1You ^3don't have acces ^1to this menu!
+
+[ru]
+CRX_EXPEDIT_CVAR_ONPAGE         = Количество игроков на странице в меню
+CRX_EXPEDIT_CVAR_FLAG           = Флаг досупа к меню редактирования
+CRX_EXPEDIT_MENU_HEAD_TAKE      = У кого отнять опыт?
+CRX_EXPEDIT_MENU_HEAD_GIVE      = Кому выдать опыт?
+CRX_EXPEDIT_MENU_HEAD_PAGE      = Страница: \y%i \wиз \y%i
+CRX_EXPEDIT_MENU_PLAYERINFO     = \w%n (\y%i exp.\w) \w[\r%i LVL\w]
+CRX_EXPEDIT_MENU_TAKE           = \rОтнимаемый \wопыт: \y[\r%i\y]
+CRX_EXPEDIT_MENU_GIVE           = \yВыдаваемый \wопыт: \y[\r%i\y]
+CRX_EXPEDIT_MENU_MORE           = Далее
+CRX_EXPEDIT_MENU_BACK           = Назад
+CRX_EXPEDIT_MENU_EXIT           = Выход
+CRX_EXPEDIT_EXPMENU_HEAD_TAKE   = \wСколько опыта отнимать?^nСейчас: \y%i
+CRX_EXPEDIT_EXPMENU_HEAD_GIVE   = \wСколько опыта выдавать?^nСейчас: \y%i
+CRX_EXPEDIT_EXPMENU_ENTEREXP    = Указать вручную
+CRX_EXPEDIT_EXPMENU_TAKE        = \rОтнимать \wопыт
+CRX_EXPEDIT_EXPMENU_GIVE        = \yВыдавать \wопыт
+CRX_EXPEDIT_CHAT_TAG            = ^4[CRXRanks]
+CRX_EXPEDIT_CHAT_GIVE           = ^3%n ^1дал ^4%i ^1опыта ^3%n
+CRX_EXPEDIT_CHAT_TAKE           = ^3%n ^1забрал ^4%i ^1опыта у ^3%n
+CRX_EXPEDIT_CHAT_WROGNUMBER     = Число не может быть меньше 1!
+CRX_EXPEDIT_CHAT_NO_ACCES       = ^1У вас ^3нет доступа ^1к этому меню!
