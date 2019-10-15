@@ -14,8 +14,6 @@ new g_bitAddingExp;
 #define GetCvarDesc(%0) fmt("%L", LANG_SERVER, %0)
 
 #define get_bit(%1,%2) (%1 & (1 << %2))
-#define set_bit(%1,%2) %1 |= (1 << %2)
-#define clr_bit(%1,%2) %1 &= ~(1 << %2)
 #define toggle_bit(%1,%2) %1 ^= (1 << %2)
 
 enum _:AmountExp
