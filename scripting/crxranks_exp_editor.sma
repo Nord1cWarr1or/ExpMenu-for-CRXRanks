@@ -2,7 +2,7 @@
 #include <amxmisc>
 #include <crxranks>
 
-new const PLUGIN_VERSION[] = "1.0.0";
+new const PLUGIN_VERSION[] = "1.0.1";
 
 #define AUTO_CONFIG	// Comment out if you don't want the plugin config to be created automatically in "configs/plugins"
 
