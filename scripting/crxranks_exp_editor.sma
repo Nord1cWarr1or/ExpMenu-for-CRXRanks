@@ -178,13 +178,9 @@ public ChooseExpMenu_handler(const iPlayer, iMenu, iItem)
 
 	switch(iItem)
 	{
-		case 0: g_iChoosenExp[iPlayer] = g_iNumbersExp[FIRST_AMOUNT];
-		case 1: g_iChoosenExp[iPlayer] = g_iNumbersExp[SECOND_AMOUNT];
-		case 2: g_iChoosenExp[iPlayer] = g_iNumbersExp[THIRD_AMOUNT];
-		case 3: g_iChoosenExp[iPlayer] = g_iNumbersExp[FOURTH_AMOUNT];
-		case 4: g_iChoosenExp[iPlayer] = g_iNumbersExp[FIFTH_AMOUNT];
 		case 5: client_cmd(iPlayer, "messagemode ^"experience^"");
 		case 6: toggle_bit(g_bitAddingExp, iPlayer);
+		default: g_iChoosenExp[iPlayer] = g_iNumbersExp[iItem];
 	}
 
 	ChooseExpMenu(iPlayer);
