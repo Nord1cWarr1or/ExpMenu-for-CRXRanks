@@ -18,7 +18,7 @@ CRX_EXPEDIT_EXPMENU_GIVE        = \yTo give \wexp
 CRX_EXPEDIT_CHAT_TAG            = ^4[CRXRanks]
 CRX_EXPEDIT_CHAT_GIVE           = ^3%n ^1gave ^4%i ^1exp to ^3%n
 CRX_EXPEDIT_CHAT_TAKE           = ^3%n ^1has taken ^4%i ^1exp from ^3%n
-CRX_EXPEDIT_CHAT_WROGNUMBER     = The number cannot be less than 1!
+CRX_EXPEDIT_CHAT_WRONGNUMBER    = The number cannot be less than 1!
 CRX_EXPEDIT_CHAT_NO_ACCES       = ^1You ^3don't have acces ^1to this menu!
 
 [ru]
@@ -41,5 +41,5 @@ CRX_EXPEDIT_EXPMENU_GIVE        = \yВыдавать \wопыт
 CRX_EXPEDIT_CHAT_TAG            = ^4[CRXRanks]
 CRX_EXPEDIT_CHAT_GIVE           = ^3%n ^1дал ^4%i ^1опыта ^3%n
 CRX_EXPEDIT_CHAT_TAKE           = ^3%n ^1забрал ^4%i ^1опыта у ^3%n
-CRX_EXPEDIT_CHAT_WROGNUMBER     = Число не может быть меньше 1!
+CRX_EXPEDIT_CHAT_WRONGNUMBER    = Число не может быть меньше 1!
 CRX_EXPEDIT_CHAT_NO_ACCES       = ^1У вас ^3нет доступа ^1к этому меню!

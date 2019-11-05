@@ -2,7 +2,7 @@
 #include <amxmisc>
 #include <crxranks>
 
-new const PLUGIN_VERSION[] = "1.0.1";
+new const PLUGIN_VERSION[] = "1.0.2";
 
 #define AUTO_CONFIG	// Comment out if you don't want the plugin config to be created automatically in "configs/plugins"
 
@@ -153,11 +153,8 @@ public ChooseExpMenu(const iPlayer)
 
 	new iMenu = menu_create(fmt("%l", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_EXPMENU_HEAD_TAKE" : "CRX_EXPEDIT_EXPMENU_HEAD_GIVE", g_iChoosenExp[iPlayer]), "ChooseExpMenu_handler");
 
-	menu_additem(iMenu, fmt("%i", g_iNumbersExp[FIRST_AMOUNT]));
-	menu_additem(iMenu, fmt("%i", g_iNumbersExp[SECOND_AMOUNT]));
-	menu_additem(iMenu, fmt("%i", g_iNumbersExp[THIRD_AMOUNT]));
-	menu_additem(iMenu, fmt("%i", g_iNumbersExp[FOURTH_AMOUNT]));
-	menu_additem(iMenu, fmt("%i^n", g_iNumbersExp[FIFTH_AMOUNT]));
+	for(new i; i < sizeof g_iNumbersExp; i++)
+		menu_additem(iMenu, fmt("%i", g_iNumbersExp[i]));
 
 	menu_additem(iMenu, fmt("%l", "CRX_EXPEDIT_EXPMENU_ENTEREXP"));
 	menu_additem(iMenu, fmt("%l", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_EXPMENU_TAKE" : "CRX_EXPEDIT_EXPMENU_GIVE"));
@@ -184,6 +181,7 @@ public ChooseExpMenu_handler(const iPlayer, iMenu, iItem)
 	}
 
 	ChooseExpMenu(iPlayer);
+	menu_destroy(iMenu);
 	return PLUGIN_HANDLED;
 }
 
@@ -198,7 +196,7 @@ public UserExp(const iPlayer)
 
 	if(iExp < 1)
 	{
-		client_print(iPlayer, print_center, "*** %l ***", "CRX_EXPEDIT_CHAT_WROGNUMBER");
+		client_print(iPlayer, print_center, "*** %l ***", "CRX_EXPEDIT_CHAT_WRONGNUMBER");
 
 		ChooseExpMenu(iPlayer);
 		return PLUGIN_CONTINUE;
