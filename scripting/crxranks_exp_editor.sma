@@ -2,7 +2,7 @@
 #include <amxmisc>
 #include <crxranks>
 
-new const PLUGIN_VERSION[] = "1.0.2";
+new const PLUGIN_VERSION[] = "1.0.3";
 
 #define AUTO_CONFIG	// Comment out if you don't want the plugin config to be created automatically in "configs/plugins"
 
@@ -55,7 +55,7 @@ public plugin_init()
 
 	register_dictionary("crx_expmenu.txt");
 
-	arrayset(g_iChoosenExp, g_iNumbersExp[FIRST_AMOUNT], charsmax(g_iChoosenExp));
+	arrayset(g_iChoosenExp, g_iNumbersExp[FIRST_AMOUNT], sizeof g_iChoosenExp);
 
 	bind_pcvar_num(create_cvar("crxranks_expedit_onpage", "7",
 		.description = GetCvarDesc("CRX_EXPEDIT_CVAR_ONPAGE"),
