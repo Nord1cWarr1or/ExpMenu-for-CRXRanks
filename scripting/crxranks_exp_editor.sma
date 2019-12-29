@@ -2,30 +2,17 @@
 #include <amxmisc>
 #include <crxranks>
 
-new const PLUGIN_VERSION[] = "1.0.3";
+new const PLUGIN_VERSION[] = "1.0.4";
 
 #define AUTO_CONFIG	// Comment out if you don't want the plugin config to be created automatically in "configs/plugins"
 
 new g_iChoosenExp[MAX_PLAYERS + 1];
 new g_iMenuPlayers[MAX_PLAYERS + 1][MAX_PLAYERS], g_iMenuPosition[MAX_PLAYERS + 1];
-
-new g_bitAddingExp;
+new bool:g_bAddingExp[MAX_PLAYERS + 1];
 
 #define GetCvarDesc(%0) fmt("%L", LANG_SERVER, %0)
 
-#define get_bit(%1,%2) (%1 & (1 << %2))
-#define toggle_bit(%1,%2) %1 ^= (1 << %2)
-
-enum _:AmountExp
-{
-	FIRST_AMOUNT,
-	SECOND_AMOUNT,
-	THIRD_AMOUNT,
-	FOURTH_AMOUNT,
-	FIFTH_AMOUNT,
-}
-
-new const g_iNumbersExp[AmountExp] =
+new const g_iNumbersExp[5] =
 {
 	5,
 	10,
@@ -55,7 +42,7 @@ public plugin_init()
 
 	register_dictionary("crx_expmenu.txt");
 
-	arrayset(g_iChoosenExp, g_iNumbersExp[FIRST_AMOUNT], sizeof g_iChoosenExp);
+	arrayset(g_iChoosenExp, g_iNumbersExp[0], sizeof g_iChoosenExp);
 
 	bind_pcvar_num(create_cvar("crxranks_expedit_onpage", "7",
 		.description = GetCvarDesc("CRX_EXPEDIT_CVAR_ONPAGE"),
@@ -103,7 +90,7 @@ public ExperienceMenu(const iPlayer, iPage)
 
 	SetGlobalTransTarget(iPlayer);
 
-	new iLen = formatex(szMenu, charsmax(szMenu), "%l^n%l^n^n", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_MENU_HEAD_TAKE" : "CRX_EXPEDIT_MENU_HEAD_GIVE", "CRX_EXPEDIT_MENU_HEAD_PAGE", iPage + 1, iPagesNum);
+	new iLen = formatex(szMenu, charsmax(szMenu), "%l^n%l^n^n", g_bAddingExp[iPlayer] ? "CRX_EXPEDIT_MENU_HEAD_TAKE" : "CRX_EXPEDIT_MENU_HEAD_GIVE", "CRX_EXPEDIT_MENU_HEAD_PAGE", iPage + 1, iPagesNum);
 
 	for(new a = iStart, iTarget; a < iEnd; ++a)
 	{
@@ -113,7 +100,7 @@ public ExperienceMenu(const iPlayer, iPage)
 		iLen += formatex(szMenu[iLen], charsmax(szMenu) - iLen, "\y%i. %l^n", ++iMenuItem, "CRX_EXPEDIT_MENU_PLAYERINFO", iTarget, crxranks_get_user_xp(iTarget), crxranks_get_user_level(iTarget));
 	}
 
-	iLen += formatex(szMenu[iLen], charsmax(szMenu) - iLen, "^n\y8. \w%l^n", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_MENU_TAKE" : "CRX_EXPEDIT_MENU_GIVE", g_iChoosenExp[iPlayer]);
+	iLen += formatex(szMenu[iLen], charsmax(szMenu) - iLen, "^n\y8. \w%l^n", g_bAddingExp[iPlayer] ? "CRX_EXPEDIT_MENU_TAKE" : "CRX_EXPEDIT_MENU_GIVE", g_iChoosenExp[iPlayer]);
 	iKeys |= MENU_KEY_8;
 
 	if(iEnd != iPlayersCount)
@@ -138,8 +125,15 @@ public ExperienceMenu_handler(const iPlayer, iKey)
 		{
 			new iTarget = g_iMenuPlayers[iPlayer][g_iMenuPosition[iPlayer] * g_iCvars[NUM_ON_PAGE] + iKey];
 
-			client_print_color(0, print_team_default, "%l %l", "CRX_EXPEDIT_CHAT_TAG", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_CHAT_TAKE" : "CRX_EXPEDIT_CHAT_GIVE", iPlayer, g_iChoosenExp[iPlayer], iTarget);
-			crxranks_give_user_xp(iTarget, get_bit(g_bitAddingExp, iPlayer) ? -g_iChoosenExp[iPlayer] : g_iChoosenExp[iPlayer]);
+			if(!is_user_connected(iTarget))
+			{
+				client_print_color(iPlayer, print_team_red, "%l %l", "CRX_EXPEDIT_CHAT_TAG", "CRX_EXPEDIT_CHAT_INVALID_PLAYER");
+				ExperienceMenu(iPlayer, g_iMenuPosition[iPlayer]);
+				return PLUGIN_HANDLED;
+			}
+
+			client_print_color(0, print_team_default, "%l %l", "CRX_EXPEDIT_CHAT_TAG", g_bAddingExp[iPlayer] ? "CRX_EXPEDIT_CHAT_TAKE" : "CRX_EXPEDIT_CHAT_GIVE", iPlayer, g_iChoosenExp[iPlayer], iTarget);
+			crxranks_give_user_xp(iTarget, g_bAddingExp[iPlayer] ? -g_iChoosenExp[iPlayer] : g_iChoosenExp[iPlayer]);
 
 			ExperienceMenu(iPlayer, g_iMenuPosition[iPlayer]);
 		}
@@ -151,13 +145,13 @@ public ChooseExpMenu(const iPlayer)
 {
 	SetGlobalTransTarget(iPlayer);
 
-	new iMenu = menu_create(fmt("%l", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_EXPMENU_HEAD_TAKE" : "CRX_EXPEDIT_EXPMENU_HEAD_GIVE", g_iChoosenExp[iPlayer]), "ChooseExpMenu_handler");
+	new iMenu = menu_create(fmt("%l", g_bAddingExp[iPlayer] ? "CRX_EXPEDIT_EXPMENU_HEAD_TAKE" : "CRX_EXPEDIT_EXPMENU_HEAD_GIVE", g_iChoosenExp[iPlayer]), "ChooseExpMenu_handler");
 
 	for(new i; i < sizeof g_iNumbersExp; i++)
 		menu_additem(iMenu, fmt("%i", g_iNumbersExp[i]));
 
-	menu_additem(iMenu, fmt("%l", "CRX_EXPEDIT_EXPMENU_ENTEREXP"));
-	menu_additem(iMenu, fmt("%l", get_bit(g_bitAddingExp, iPlayer) ? "CRX_EXPEDIT_EXPMENU_TAKE" : "CRX_EXPEDIT_EXPMENU_GIVE"));
+	menu_additem(iMenu, fmt("^n%l", "CRX_EXPEDIT_EXPMENU_ENTEREXP"));
+	menu_additem(iMenu, fmt("%l", g_bAddingExp[iPlayer] ? "CRX_EXPEDIT_EXPMENU_TAKE" : "CRX_EXPEDIT_EXPMENU_GIVE"));
 
 	menu_setprop(iMenu, MPROP_EXITNAME, fmt("%l", "CRX_EXPEDIT_MENU_BACK"));
 
@@ -176,7 +170,7 @@ public ChooseExpMenu_handler(const iPlayer, iMenu, iItem)
 	switch(iItem)
 	{
 		case 5: client_cmd(iPlayer, "messagemode ^"experience^"");
-		case 6: toggle_bit(g_bitAddingExp, iPlayer);
+		case 6: g_bAddingExp[iPlayer] = !g_bAddingExp[iPlayer];
 		default: g_iChoosenExp[iPlayer] = g_iNumbersExp[iItem];
 	}
 
